@@ -1,0 +1,75 @@
+int IRSensor05 = 0;
+int IRSensor1 = 0; // connect ir sensor to arduino pin 2
+int IRSensor2 = 0; 
+int IRSensor5 = 0;
+int IRSensor10 = 0;
+
+int beforeReadIRSensor05 = 1;
+int beforeReadIRSensor1 = 1;
+int beforeReadIRSensor2 = 1;
+int beforeReadIRSensor5 = 1;
+int beforeReadIRSensor10 = 1;
+
+
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode (IRSensor05, INPUT); 
+  pinMode (IRSensor1, INPUT); // sensor pin $1 INPUT
+  pinMode (IRSensor2, INPUT); // sensor pin $2 INPUT
+  pinMode (IRSensor5, INPUT); // sensor pin $5 INPUT
+  pinMode (IRSensor10, INPUT); // sensor pin $10 INPUT
+ 
+}
+
+void loop()
+{
+   
+  //para moneda de $2
+  if (digitalRead(A8) == 0 && beforeReadIRSensor05 ==1) {
+    Serial.println("$0.5");
+    IRSensor05 += 1;
+    beforeReadIRSensor05 = 0;}
+  else if(digitalRead(A8) == 1) { 
+    beforeReadIRSensor05 = 1; 
+  } 
+  //para moneda de $1
+  if (digitalRead(A0) == 0 && beforeReadIRSensor1 ==1) {
+    Serial.println("$1");
+    IRSensor1 += 1; 
+    beforeReadIRSensor1 = 0;}
+  else if (digitalRead(A0) == 1) {
+    beforeReadIRSensor1 = 1;
+    
+  } 
+  //para moneda de $2
+  if (digitalRead(A1) == 0 && beforeReadIRSensor2 ==1) {
+    Serial.println("$2");
+    IRSensor2 += 1;
+    beforeReadIRSensor2 = 0;}
+  else if(digitalRead(A1) == 1) { 
+    beforeReadIRSensor2 = 1;
+  } 
+  //para moneda de $5
+  if (digitalRead(A2) == 0 && beforeReadIRSensor5 ==1) {
+    Serial.println("$5");
+    IRSensor5 += 1;
+    beforeReadIRSensor5 = 0; }
+   else if(digitalRead(A2) == 1) { 
+    beforeReadIRSensor5 = 1;
+  } 
+  //para moneda de $10
+  if (digitalRead(A3) == 0 && beforeReadIRSensor10 ==1) {
+    Serial.println("$10");
+    IRSensor10 += 1;
+    beforeReadIRSensor10 = 0; }
+   else if(digitalRead(A3) == 1) { 
+    beforeReadIRSensor10 = 1;
+  }
+  Serial.println("TOTAL: ");
+  Serial.flush();
+   float sum = IRSensor05 * 0.5 + IRSensor1 * 1 + IRSensor2 * 2 + IRSensor5 * 5 + IRSensor10 * 10;
+  Serial.println(sum);
+  Serial.flush();
+
+}
